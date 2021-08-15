@@ -74,8 +74,8 @@ class _homeState extends State<home> {
     return Row(
         children: burgerList
             .map((e) =>
-                categoriesContainer(onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=> Categories(list: burgerCategoriesList,)) );
+                categoriesContainer(onTap: () async{
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: burgerCategoriesList,)) );
                 }, image: e.image, name: e.name))
             .toList());
   }

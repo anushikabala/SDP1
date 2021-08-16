@@ -1,5 +1,9 @@
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:food_order/cart_modle.dart';
 import 'package:food_order/categories_modle.dart';
 import 'package:food_order/foodModle.dart';
 import 'package:food_order/food_categories_modle.dart';
@@ -168,7 +172,8 @@ class Myprovider extends ChangeNotifier {
       foodModle = FoodModle(
           image: (element.data() as dynamic)['image'],
           name: (element.data() as dynamic)['name'],
-          price: (element.data() as dynamic)['price']);
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
       print(foodModle.name);
       newfoodModleList.add(foodModle);
       foodModleList = newfoodModleList;
@@ -194,7 +199,8 @@ class Myprovider extends ChangeNotifier {
       burgerCategoriesModle = FoodCategoriesModle(
           image: (element.data() as dynamic)['image'],
           name: (element.data() as dynamic)['name'],
-          price: (element.data() as dynamic)['price']);
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
       newBurgerCategoriesList.add(burgerCategoriesModle);
       burgerCategoriesList = newBurgerCategoriesList;
     });
@@ -204,4 +210,177 @@ class Myprovider extends ChangeNotifier {
   get throwBurgerCategoriesList {
     return burgerCategoriesList;
   }
+
+  ////////////pizza categories list//////
+  List<FoodCategoriesModle> pizzaCategoriesList = [];
+  late FoodCategoriesModle pizzaCategoriesModle;
+
+  Future<void> getPizzaCategoriesList() async {
+    List<FoodCategoriesModle> newPizzaCategoriesList = [];
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('foodcategories')
+        .doc('2pkmdeOKJ6xPHGQeREvG')
+        .collection('Pizza')
+        .get();
+    querySnapshot.docs.forEach((element) {
+      pizzaCategoriesModle = FoodCategoriesModle(
+          image: (element.data() as dynamic)['image'],
+          name: (element.data() as dynamic)['name'],
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
+      newPizzaCategoriesList.add(pizzaCategoriesModle);
+      pizzaCategoriesList = newPizzaCategoriesList;
+    });
+    print(pizzaCategoriesModle.name);
+  }
+
+  get throwPizzaCategoriesList {
+    return pizzaCategoriesList;
+  }
+
+  ////////////Momo categories list//////
+  List<FoodCategoriesModle> momoCategoriesList = [];
+  late FoodCategoriesModle momoCategoriesModle;
+
+  Future<void> getMomoCategoriesList() async {
+    List<FoodCategoriesModle> newMomoCategoriesList = [];
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('foodcategories')
+        .doc('2pkmdeOKJ6xPHGQeREvG')
+        .collection('Momo')
+        .get();
+    querySnapshot.docs.forEach((element) {
+      momoCategoriesModle = FoodCategoriesModle(
+          image: (element.data() as dynamic)['image'],
+          name: (element.data() as dynamic)['name'],
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
+      newMomoCategoriesList.add(momoCategoriesModle);
+      momoCategoriesList = newMomoCategoriesList;
+    });
+    print(momoCategoriesModle.name);
+  }
+
+  get throwMomoCategoriesList {
+    return momoCategoriesList;
+  }
+
+  ////////////Salad categories list//////
+  List<FoodCategoriesModle> saladCategoriesList = [];
+  late FoodCategoriesModle saladCategoriesModle;
+
+  Future<void> getSaladCategoriesList() async {
+    List<FoodCategoriesModle> newSaladCategoriesList = [];
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('foodcategories')
+        .doc('2pkmdeOKJ6xPHGQeREvG')
+        .collection('Salad')
+        .get();
+    querySnapshot.docs.forEach((element) {
+      saladCategoriesModle = FoodCategoriesModle(
+          image: (element.data() as dynamic)['image'],
+          name: (element.data() as dynamic)['name'],
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
+      newSaladCategoriesList.add(saladCategoriesModle);
+      saladCategoriesList = newSaladCategoriesList;
+    });
+    print(saladCategoriesModle.name);
+  }
+
+  get throwSaladCategoriesList {
+    return saladCategoriesList;
+  }
+
+  ////////////Drinks categories list//////
+  List<FoodCategoriesModle> drinksCategoriesList = [];
+  late FoodCategoriesModle drinksCategoriesModle;
+
+  Future<void> getDrinksCategoriesList() async {
+    List<FoodCategoriesModle> newDrinksCategoriesList = [];
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('foodcategories')
+        .doc('2pkmdeOKJ6xPHGQeREvG')
+        .collection('Drinks')
+        .get();
+    querySnapshot.docs.forEach((element) {
+      drinksCategoriesModle = FoodCategoriesModle(
+          image: (element.data() as dynamic)['image'],
+          name: (element.data() as dynamic)['name'],
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
+      newDrinksCategoriesList.add(drinksCategoriesModle);
+      drinksCategoriesList = newDrinksCategoriesList;
+    });
+    print(drinksCategoriesModle.name);
+  }
+
+  get throwDrinksCategoriesList {
+    return drinksCategoriesList;
+  }
+
+  ////////////Biriyani categories list//////
+  List<FoodCategoriesModle> biriyaniCategoriesList = [];
+  late FoodCategoriesModle biriyaniCategoriesModle;
+
+  Future<void> getBiriyaniCategoriesList() async {
+    List<FoodCategoriesModle> newBiriyaniCategoriesList = [];
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('foodcategories')
+        .doc('2pkmdeOKJ6xPHGQeREvG')
+        .collection('biriyani')
+        .get();
+    querySnapshot.docs.forEach((element) {
+      biriyaniCategoriesModle = FoodCategoriesModle(
+          image: (element.data() as dynamic)['image'],
+          name: (element.data() as dynamic)['name'],
+          price: (element.data() as dynamic)['price'],
+          des: (element.data() as dynamic)['des']);
+      newBiriyaniCategoriesList.add(biriyaniCategoriesModle);
+      biriyaniCategoriesList = newBiriyaniCategoriesList;
+    });
+    print(biriyaniCategoriesModle.name);
+  }
+
+  get throwBiriyaniCategoriesList {
+    return biriyaniCategoriesList;
+  }
+
+  //////ADD TO CART /////////
+  List<CartModle> cartList = [];
+  List<CartModle> newCartList = [];
+  late CartModle cartModle;
+
+  void addToCart(
+      {required String image,
+      required String name,
+      required int price,
+      required int quantity}) {
+    cartModle =
+        CartModle(image: image, name: name, price: price, quantity: quantity
+        );
+    newCartList.add(cartModle);
+    cartList = newCartList;
+  }
+  get throwCartList{
+    return cartList;
+  }
+
+  int totalprice(){
+    int total =1;
+    cartList.forEach((element) {
+      total += element.price*element.quantity;
+    });
+    return total;
+  }
+
+  late int deleteIndex;
+  void getDeleteIndex(int index){
+    deleteIndex= index;
+  }
+  void delete(){
+    cartList.removeAt(deleteIndex);
+    notifyListeners();
+  }
+
 }

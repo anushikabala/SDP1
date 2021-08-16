@@ -6,6 +6,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:food_order/User/userwelcom.dart';
+import 'package:food_order/cart_page.dart';
+import 'package:food_order/details_page.dart';
 import 'package:food_order/provider.dart';
 
 import 'package:provider/provider.dart';
@@ -33,15 +35,17 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (index,snapshot){
-              if(snapshot.hasData){
-                return home();
-              }
-              return userwelcome();
-            },
-          )),
+          home: home(),
+          // home: StreamBuilder(
+          //   stream: FirebaseAuth.instance.authStateChanges(),
+          //   builder: (index,snapshot){
+          //     if(snapshot.hasData){
+          //       return home();
+          //     }
+          //     return userwelcome();
+          //   },
+          // )
+      ),
     );
   }
 }

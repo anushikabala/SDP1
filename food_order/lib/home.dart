@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order/categories.dart';
 import 'package:food_order/categories_modle.dart';
+import 'package:food_order/details_page.dart';
 import 'package:food_order/foodModle.dart';
 import 'package:food_order/food_categories_modle.dart';
 import 'package:food_order/main.dart';
@@ -20,11 +21,12 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   Widget categoriesContainer(
-      {required Function onTap, required String image, required String name}) {
+      {required Function()? onTap, required String image, required String name}) {
+
     return Column(
       children: [
         GestureDetector(
-          onTap: onTap(),
+          onTap: onTap,
           child: Container(
             margin: EdgeInsets.only(right: 20.0),
             height: 70.0,
@@ -69,6 +71,11 @@ class _homeState extends State<home> {
   List<CategoriesM> categoryFoodList = [];
 
   List<FoodCategoriesModle> burgerCategoriesList = [];
+  List<FoodCategoriesModle> pizzaCategoriesList = [];
+  List<FoodCategoriesModle> momoCategoriesList = [];
+  List<FoodCategoriesModle> saladCategoriesList = [];
+  List<FoodCategoriesModle> drinksCategoriesList = [];
+  List<FoodCategoriesModle> biriyaniCategoriesList = [];
 
   Widget burger() {
     return Row(
@@ -84,7 +91,9 @@ class _homeState extends State<home> {
     return Row(
         children: drinksList
             .map((e) =>
-                categoriesContainer(onTap: () {}, image: e.image, name: e.name))
+                categoriesContainer(onTap: () async{
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: drinksCategoriesList,)) );
+                }, image: e.image, name: e.name))
             .toList());
   }
 
@@ -92,7 +101,9 @@ class _homeState extends State<home> {
     return Row(
         children: pizzaList
             .map((e) =>
-                categoriesContainer(onTap: () {}, image: e.image, name: e.name))
+                categoriesContainer(onTap: () async{
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: pizzaCategoriesList,)) );
+                }, image: e.image, name: e.name))
             .toList());
   }
 
@@ -100,7 +111,9 @@ class _homeState extends State<home> {
     return Row(
         children: momoList
             .map((e) =>
-                categoriesContainer(onTap: () {}, image: e.image, name: e.name))
+                categoriesContainer(onTap: () async{
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: momoCategoriesList,)) );
+                }, image: e.image, name: e.name))
             .toList());
   }
 
@@ -108,7 +121,9 @@ class _homeState extends State<home> {
     return Row(
         children: biriyaniList
             .map((e) =>
-                categoriesContainer(onTap: () {}, image: e.image, name: e.name))
+                categoriesContainer(onTap: () async{
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: biriyaniCategoriesList,)) );
+                }, image: e.image, name: e.name))
             .toList());
   }
 
@@ -116,7 +131,9 @@ class _homeState extends State<home> {
     return Row(
         children: saladList
             .map((e) =>
-                categoriesContainer(onTap: () {}, image: e.image, name: e.name))
+                categoriesContainer(onTap: () async{
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: saladCategoriesList,)) );
+                }, image: e.image, name: e.name))
             .toList());
   }
 
@@ -137,8 +154,19 @@ class _homeState extends State<home> {
     provider.getSaladCategory();
     saladList = provider.throwSaladList;
 
+    //foodCategories
     provider.getBurgerCategoriesList();
     burgerCategoriesList= provider.throwBurgerCategoriesList;
+    provider.getPizzaCategoriesList();
+    pizzaCategoriesList= provider.throwPizzaCategoriesList;
+    provider.getMomoCategoriesList();
+    momoCategoriesList= provider.throwMomoCategoriesList;
+    provider.getSaladCategoriesList();
+    saladCategoriesList= provider.throwSaladCategoriesList;
+    provider.getDrinksCategoriesList();
+    drinksCategoriesList= provider.throwDrinksCategoriesList;
+    provider.getBiriyaniCategoriesList();
+    biriyaniCategoriesList= provider.throwBiriyaniCategoriesList;
 
     //single//
     provider.getFoodList();
@@ -253,6 +281,17 @@ class _homeState extends State<home> {
                     children: singleFoodList
                         .map(
                           (e) => BottomContainer(
+                            onTap: (){
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context)=> DetailPage(
+                                        image: e.image,
+                                        price: e.price,
+                                        des: e.des,
+                                        name: e.name,
+
+                                      )));
+                            },
                               image: e.image, name: e.name, price: e.price),
                         )
                         .toList()),

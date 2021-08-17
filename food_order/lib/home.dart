@@ -1,6 +1,5 @@
-
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_order/categories.dart';
@@ -10,9 +9,12 @@ import 'package:food_order/foodModle.dart';
 import 'package:food_order/food_categories_modle.dart';
 import 'package:food_order/main.dart';
 import 'package:food_order/provider.dart';
+import 'package:food_order/user_model.dart';
 import 'package:provider/provider.dart';
 
 import 'bottom_Container.dart';
+
+late UserModel userModel;
 
 class home extends StatefulWidget {
   @override
@@ -20,9 +22,28 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
-  Widget categoriesContainer(
-      {required Function()? onTap, required String image, required String name}) {
 
+  Future getCurrentUserDataFunction() async{
+    await FirebaseFirestore.instance
+        .collection('UserData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then(
+          (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          userModel = UserModel.fromDocument(documentSnapshot);
+        } else {
+          print("Document does not exist the database");
+        }
+      },
+    );
+  }
+
+
+  Widget categoriesContainer(
+      {required Function()? onTap,
+      required String image,
+      required String name}) {
     return Column(
       children: [
         GestureDetector(
@@ -47,8 +68,6 @@ class _homeState extends State<home> {
       ],
     );
   }
-
-
 
   Widget drawerItem({required String name, @required IconData}) {
     return ListTile(
@@ -80,60 +99,90 @@ class _homeState extends State<home> {
   Widget burger() {
     return Row(
         children: burgerList
-            .map((e) =>
-                categoriesContainer(onTap: () async{
-                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: burgerCategoriesList,)) );
-                }, image: e.image, name: e.name))
+            .map((e) => categoriesContainer(
+                onTap: () async {
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Categories(
+                            list: burgerCategoriesList,
+                          )));
+                },
+                image: e.image,
+                name: e.name))
             .toList());
   }
 
   Widget drinks() {
     return Row(
         children: drinksList
-            .map((e) =>
-                categoriesContainer(onTap: () async{
-                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: drinksCategoriesList,)) );
-                }, image: e.image, name: e.name))
+            .map((e) => categoriesContainer(
+                onTap: () async {
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Categories(
+                            list: drinksCategoriesList,
+                          )));
+                },
+                image: e.image,
+                name: e.name))
             .toList());
   }
 
   Widget pizza() {
     return Row(
         children: pizzaList
-            .map((e) =>
-                categoriesContainer(onTap: () async{
-                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: pizzaCategoriesList,)) );
-                }, image: e.image, name: e.name))
+            .map((e) => categoriesContainer(
+                onTap: () async {
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Categories(
+                            list: pizzaCategoriesList,
+                          )));
+                },
+                image: e.image,
+                name: e.name))
             .toList());
   }
 
   Widget momo() {
     return Row(
         children: momoList
-            .map((e) =>
-                categoriesContainer(onTap: () async{
-                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: momoCategoriesList,)) );
-                }, image: e.image, name: e.name))
+            .map((e) => categoriesContainer(
+                onTap: () async {
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Categories(
+                            list: momoCategoriesList,
+                          )));
+                },
+                image: e.image,
+                name: e.name))
             .toList());
   }
 
   Widget biriyani() {
     return Row(
         children: biriyaniList
-            .map((e) =>
-                categoriesContainer(onTap: () async{
-                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: biriyaniCategoriesList,)) );
-                }, image: e.image, name: e.name))
+            .map((e) => categoriesContainer(
+                onTap: () async {
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Categories(
+                            list: biriyaniCategoriesList,
+                          )));
+                },
+                image: e.image,
+                name: e.name))
             .toList());
   }
 
   Widget salad() {
     return Row(
         children: saladList
-            .map((e) =>
-                categoriesContainer(onTap: () async{
-                  await Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> Categories(list: saladCategoriesList,)) );
-                }, image: e.image, name: e.name))
+            .map((e) => categoriesContainer(
+                onTap: () async {
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Categories(
+                            list: saladCategoriesList,
+                          )));
+                },
+                image: e.image,
+                name: e.name))
             .toList());
   }
 
@@ -154,24 +203,29 @@ class _homeState extends State<home> {
     provider.getSaladCategory();
     saladList = provider.throwSaladList;
 
+
     //foodCategories
     provider.getBurgerCategoriesList();
-    burgerCategoriesList= provider.throwBurgerCategoriesList;
+    burgerCategoriesList = provider.throwBurgerCategoriesList;
     provider.getPizzaCategoriesList();
-    pizzaCategoriesList= provider.throwPizzaCategoriesList;
+    pizzaCategoriesList = provider.throwPizzaCategoriesList;
     provider.getMomoCategoriesList();
-    momoCategoriesList= provider.throwMomoCategoriesList;
+    momoCategoriesList = provider.throwMomoCategoriesList;
     provider.getSaladCategoriesList();
-    saladCategoriesList= provider.throwSaladCategoriesList;
+    saladCategoriesList = provider.throwSaladCategoriesList;
     provider.getDrinksCategoriesList();
-    drinksCategoriesList= provider.throwDrinksCategoriesList;
+    drinksCategoriesList = provider.throwDrinksCategoriesList;
     provider.getBiriyaniCategoriesList();
-    biriyaniCategoriesList= provider.throwBiriyaniCategoriesList;
+    biriyaniCategoriesList = provider.throwBiriyaniCategoriesList;
 
     //single//
     provider.getFoodList();
     singleFoodList = provider.throwFoodModleList;
+
+    getCurrentUserDataFunction();
+
     return Scaffold(
+
       drawer: Drawer(
         child: Container(
           color: Color(getColorHexFromStr('#fbcd7a')),
@@ -189,11 +243,11 @@ class _homeState extends State<home> {
                       backgroundImage: AssetImage('assets/profile.png'),
                     ),
                     accountName: Text(
-                      "Anushika Bala",
+                      (userModel.name),
                       style: TextStyle(color: Colors.black),
                     ),
                     accountEmail: Text(
-                      "Anushikabala@gmail.com",
+                      (userModel.email),
                       style: TextStyle(color: Colors.black),
                     )),
                 drawerItem(name: "Profile", IconData: Icons.person),
@@ -281,18 +335,19 @@ class _homeState extends State<home> {
                     children: singleFoodList
                         .map(
                           (e) => BottomContainer(
-                            onTap: (){
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context)=> DetailPage(
-                                        image: e.image,
-                                        price: e.price,
-                                        des: e.des,
-                                        name: e.name,
-
-                                      )));
-                            },
-                              image: e.image, name: e.name, price: e.price),
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                              image: e.image,
+                                              price: e.price,
+                                              des: e.des,
+                                              name: e.name,
+                                            )));
+                              },
+                              image: e.image,
+                              name: e.name,
+                              price: e.price),
                         )
                         .toList()),
               ),

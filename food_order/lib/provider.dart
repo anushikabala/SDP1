@@ -367,7 +367,7 @@ class Myprovider extends ChangeNotifier {
   }
 
   int totalprice(){
-    int total =1;
+    int total =0;
     cartList.forEach((element) {
       total += element.price*element.quantity;
     });

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_order/about_contact.dart';
 import 'package:food_order/categories.dart';
 import 'package:food_order/categories_modle.dart';
 import 'package:food_order/details_page.dart';
@@ -13,8 +14,24 @@ import 'package:food_order/user_model.dart';
 import 'package:provider/provider.dart';
 
 import 'bottom_Container.dart';
+import 'cart_page.dart';
 
-late UserModel userModel;
+// late UserModel userModel;
+// Future getCurrentUserDataFunction() async{
+//   await FirebaseFirestore.instance
+//       .collection('UserData')
+//       .doc(FirebaseAuth.instance.currentUser!.uid)
+//       .get()
+//       .then(
+//         (DocumentSnapshot documentSnapshot) {
+//       if (documentSnapshot.exists) {
+//         userModel = UserModel.fromDocument(documentSnapshot);
+//       } else {
+//         print("Document does not exist the database");
+//       }
+//     },
+//   );
+// }
 
 class home extends StatefulWidget {
   @override
@@ -23,21 +40,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
 
-  Future getCurrentUserDataFunction() async{
-    await FirebaseFirestore.instance
-        .collection('UserData')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then(
-          (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          userModel = UserModel.fromDocument(documentSnapshot);
-        } else {
-          print("Document does not exist the database");
-        }
-      },
-    );
-  }
+
 
 
   Widget categoriesContainer(
@@ -69,13 +72,16 @@ class _homeState extends State<home> {
     );
   }
 
-  Widget drawerItem({required String name, @required IconData}) {
-    return ListTile(
-      leading: Icon(
-        IconData,
-        color: Colors.black,
+  Widget drawerItem({required String name, required IconData,required Function()? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ListTile(
+        leading: Icon(
+          IconData,
+          color: Colors.black,
+        ),
+        title: Text(name, style: TextStyle(color: Colors.black)),
       ),
-      title: Text(name, style: TextStyle(color: Colors.black)),
     );
   }
 
@@ -222,7 +228,7 @@ class _homeState extends State<home> {
     provider.getFoodList();
     singleFoodList = provider.throwFoodModleList;
 
-    getCurrentUserDataFunction();
+    // getCurrentUserDataFunction();
 
     return Scaffold(
 
@@ -243,18 +249,30 @@ class _homeState extends State<home> {
                       backgroundImage: AssetImage('assets/profile.png'),
                     ),
                     accountName: Text(
-                      (userModel.name),
+                      ("Anushika"),
                       style: TextStyle(color: Colors.black),
                     ),
                     accountEmail: Text(
-                      (userModel.email),
+                      ("Shika@gmail.com"),
                       style: TextStyle(color: Colors.black),
                     )),
-                drawerItem(name: "Profile", IconData: Icons.person),
-                drawerItem(name: "Cart", IconData: Icons.add_shopping_cart),
-                drawerItem(name: "Order", IconData: Icons.shop),
-                drawerItem(name: "About", IconData: Icons.announcement_rounded),
-                drawerItem(name: "About", IconData: Icons.person),
+                drawerItem(name: "Profile", IconData: Icons.person,onTap: (){
+
+                }),
+                drawerItem(name: "Cart", IconData: Icons.add_shopping_cart,onTap: (){
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => CartPage(),
+                    ),
+                  );
+                }),
+                drawerItem(name: "About", IconData: Icons.announcement_rounded,onTap: (){
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => about_Us(),
+                    ),
+                  );
+                }),
                 Divider(
                   thickness: 2,
                   color: Colors.black,
@@ -263,8 +281,9 @@ class _homeState extends State<home> {
                   leading: Text("Communicate",
                       style: TextStyle(color: Colors.black, fontSize: 20)),
                 ),
-                drawerItem(name: "Change", IconData: Icons.lock),
-                drawerItem(name: "Logout", IconData: Icons.exit_to_app),
+                drawerItem(name: "Contact Us", IconData: Icons.lock,onTap: (){
+                }),
+                drawerItem(name: "Logout", IconData: Icons.exit_to_app,onTap: (){}),
               ],
             ),
           ),

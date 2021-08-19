@@ -4,16 +4,16 @@ class UserModel{
   final String name;
   final String email;
   final String password;
-  final String userid;
   final String phone;
+  final String userid;
+
 
   UserModel({
     required this.name,
     required this.email,
     required this.password,
-    required this.userid,
-    required this.phone
-
+    required this.phone,
+    required this.userid
   }
   );
 
@@ -22,8 +22,8 @@ class UserModel{
         name: doc['name'],
         email: doc['email'],
         password: doc['password'],
-        userid: doc['userid'],
-        phone: doc['phone']
+        phone: doc['phone'],
+        userid: doc['userid']
 
     );
   }

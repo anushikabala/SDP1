@@ -9,12 +9,14 @@ import 'package:food_order/details_page.dart';
 import 'package:food_order/foodModle.dart';
 import 'package:food_order/food_categories_modle.dart';
 import 'package:food_order/main.dart';
+import 'package:food_order/profile.dart';
 import 'package:food_order/provider.dart';
 import 'package:food_order/user_model.dart';
 import 'package:provider/provider.dart';
 
 import 'bottom_Container.dart';
 import 'cart_page.dart';
+import 'contact.dart';
 
 // late UserModel userModel;
 // Future getCurrentUserDataFunction() async{
@@ -257,7 +259,11 @@ class _homeState extends State<home> {
                       style: TextStyle(color: Colors.black),
                     )),
                 drawerItem(name: "Profile", IconData: Icons.person,onTap: (){
-
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  );
                 }),
                 drawerItem(name: "Cart", IconData: Icons.add_shopping_cart,onTap: (){
                   Navigator.of(context).pushReplacement(
@@ -282,6 +288,11 @@ class _homeState extends State<home> {
                       style: TextStyle(color: Colors.black, fontSize: 20)),
                 ),
                 drawerItem(name: "Contact Us", IconData: Icons.lock,onTap: (){
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => contact(),
+                    ),
+                  );
                 }),
                 drawerItem(name: "Logout", IconData: Icons.exit_to_app,onTap: (){}),
               ],

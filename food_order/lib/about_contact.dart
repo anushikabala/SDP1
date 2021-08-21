@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class about_Us extends StatefulWidget {
   @override
   about_Us_State createState() => about_Us_State();
@@ -12,15 +14,19 @@ class about_Us_State extends State<about_Us> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
+
         elevation: 0.0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(9.0),
-            child:
-            CircleAvatar(backgroundImage: AssetImage('assets/profile.png')),
-          )
-        ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => home()));
+          },
+        ),
+        backgroundColor: Colors.orangeAccent,
       ),
       body: Container(
           color: Colors.white,
